@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}LTPOA · Catálogo de Amostras{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">Rastreabilidade laboratorial</span>
+        <h1>Cada amostra,<br><em>bem acompanhada.</em></h1>
+        <p>Registre e acompanhe amostras de mel, leite e outros produtos em um catálogo simples, seguro e acessível em qualquer dispositivo.</p>
+        <div class="actions">
+            <a class="button primary" href="{% url 'login' %}">Acessar o sistema</a>
+            <a class="button secondary" href="{% url 'signup' %}">Solicitar uma conta</a>
+        </div>
+    </div>
+    <div class="hero-card" aria-label="Resumo ilustrativo do sistema">
+        <div class="hero-card-head"><span>Amostras recentes</span><span class="live-dot">Sistema ativo</span></div>
+        <div class="sample-preview">
+            <span class="sample-icon honey">M</span>
+            <div><strong>MEL-2026-014</strong><small>Mel · Santarém, PA</small></div>
+            <span class="status analyzing">Em análise</span>
+        </div>
+        <div class="sample-preview">
+            <span class="sample-icon milk">L</span>
+            <div><strong>LEI-2026-008</strong><small>Leite · Belterra, PA</small></div>
+            <span class="status received">Recebida</span>
+        </div>
+        <div class="sample-preview muted-row">
+            <span class="sample-icon other">O</span>
+            <div><strong>OUT-2026-003</strong><small>Outro produto</small></div>
+            <span class="status completed">Concluída</span>
+        </div>
+    </div>
+</section>
+<section class="feature-strip">
+    <div><strong>01</strong><span>Cadastre a entrada</span></div>
+    <div><strong>02</strong><span>Acompanhe o status</span></div>
+    <div><strong>03</strong><span>Consulte o histórico</span></div>
+</section>
+{% endblock %}

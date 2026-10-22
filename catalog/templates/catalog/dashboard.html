@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Painel · LTPOA{% endblock %}
+{% block content %}
+<section class="page">
+    <div class="page-heading heading-row">
+        <div><span class="eyebrow">Visão geral</span><h1>Olá, {{ user.first_name|default:user.username }}.</h1><p>Acompanhe o fluxo de amostras do laboratório.</p></div>
+        <a class="button primary" href="{% url 'sample_create' %}">+ Nova amostra</a>
+    </div>
+    <div class="metric-grid">
+        <div class="metric accent"><span>Total de amostras</span><strong>{{ total|stringformat:"02d" }}</strong><small>Registros no catálogo</small></div>
+        <div class="metric"><span>Recebidas</span><strong>{{ received|stringformat:"02d" }}</strong><small>Aguardando análise</small></div>
+        <div class="metric"><span>Em análise</span><strong>{{ analyzing|stringformat:"02d" }}</strong><small>Em processamento</small></div>
+        <div class="metric"><span>Concluídas</span><strong>{{ completed|stringformat:"02d" }}</strong><small>Processo finalizado</small></div>
+    </div>
+    <section class="panel">
+        <div class="panel-head"><div><h2>Amostras recentes</h2><p>Últimos registros recebidos</p></div><a href="{% url 'sample_list' %}">Ver todas →</a></div>
+        {% if recent_samples %}
+        <div class="table-wrap"><table><thead><tr><th>Código</th><th>Tipo</th><th>Origem</th><th>Recebimento</th><th>Status</th></tr></thead><tbody>
+            {% for sample in recent_samples %}<tr><td><a class="code-link" href="{{ sample.get_absolute_url }}">{{ sample.code }}</a></td><td>{{ sample.get_sample_type_display }}</td><td>{{ sample.origin }}</td><td>{{ sample.received_at|date:"d/m/Y" }}</td><td><span class="status {{ sample.status|lower }}">{{ sample.get_status_display }}</span></td></tr>{% endfor %}
+        </tbody></table></div>
+        {% else %}<div class="empty"><strong>Nenhuma amostra cadastrada</strong><p>Comece registrando a primeira entrada do laboratório.</p><a class="button secondary" href="{% url 'sample_create' %}">Cadastrar amostra</a></div>{% endif %}
+    </section>
+</section>
+{% endblock %}

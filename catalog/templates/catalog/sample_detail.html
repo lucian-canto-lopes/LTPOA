@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ sample.code }} · LTPOA{% endblock %}
+{% block content %}
+<section class="page narrow-form">
+    <div class="page-heading heading-row"><div><a class="back-link" href="{% url 'sample_list' %}">← Todas as amostras</a><span class="eyebrow">{{ sample.get_sample_type_display }}</span><h1>{{ sample.code }}</h1><p>Recebida em {{ sample.received_at|date:"d \d\e F \d\e Y" }}</p></div><a class="button secondary" href="{% url 'sample_update' sample.pk %}">Editar registro</a></div>
+    <div class="detail-card">
+        <div class="detail-highlight"><span>Status atual</span><strong class="status {{ sample.status|lower }}">{{ sample.get_status_display }}</strong></div>
+        <dl class="detail-grid">
+            <div><dt>Tipo</dt><dd>{{ sample.get_sample_type_display }}</dd></div>
+            <div><dt>Quantidade</dt><dd>{{ sample.amount }} {{ sample.get_unit_display }}</dd></div>
+            <div><dt>Origem</dt><dd>{{ sample.origin }}</dd></div>
+            <div><dt>Solicitante</dt><dd>{{ sample.requester }}</dd></div>
+            <div><dt>Condição</dt><dd>{{ sample.get_condition_display }}</dd></div>
+            <div><dt>Cadastrada por</dt><dd>{{ sample.created_by.get_full_name|default:sample.created_by.username }}</dd></div>
+            <div class="wide"><dt>Observações</dt><dd>{{ sample.notes|default:"Nenhuma observação registrada."|linebreaksbr }}</dd></div>
+        </dl>
+        <div class="audit">Criada em {{ sample.created_at|date:"d/m/Y H:i" }} · Atualizada em {{ sample.updated_at|date:"d/m/Y H:i" }}</div>
+    </div>
+</section>
+{% endblock %}

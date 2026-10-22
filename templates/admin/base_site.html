@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Administração LTPOA{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="icon" href="{% static 'catalog/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'admin/css/ltpoa_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+  <div class="ltpoa-admin-brand">
+    <a href="{% url 'admin:index' %}">
+      <span class="ltpoa-admin-mark">L</span>
+      <span class="ltpoa-admin-name">
+        <strong>LTPOA</strong>
+        <small>Administração do laboratório</small>
+      </span>
+    </a>
+  </div>
+{% endblock %}
+
+{% block nav-global %}
+  {% if user.is_authenticated %}<a class="ltpoa-catalog-link" href="{% url 'dashboard' %}">← Voltar ao catálogo</a>{% endif %}
+{% endblock %}

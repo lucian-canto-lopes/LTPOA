@@ -1,0 +1,25 @@
+databases:
+  - name: ltpoa-db
+    plan: free
+    databaseName: ltpoa
+    user: ltpoa
+
+services:
+  - type: web
+    name: ltpoa-catalogo
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn ltpoa.wsgi:application
+    healthCheckPath: /
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ltpoa-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: .onrender.com

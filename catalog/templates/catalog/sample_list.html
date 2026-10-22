@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Amostras · LTPOA{% endblock %}
+{% block content %}
+<section class="page">
+    <div class="page-heading heading-row"><div><span class="eyebrow">Catálogo</span><h1>Amostras</h1><p>Consulte, filtre e acompanhe todos os registros.</p></div><a class="button primary" href="{% url 'sample_create' %}">+ Nova amostra</a></div>
+    <form method="get" class="filter-bar">
+        <div class="search-field"><label class="sr-only" for="q">Buscar</label><input id="q" name="q" value="{{ query }}" placeholder="Buscar por código, origem ou solicitante"></div>
+        <select name="tipo" aria-label="Filtrar por tipo"><option value="">Todos os tipos</option>{% for value, label in sample_types %}<option value="{{ value }}" {% if selected_type == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+        <select name="status" aria-label="Filtrar por status"><option value="">Todos os status</option>{% for value, label in statuses %}<option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+        <button class="button secondary" type="submit">Filtrar</button>
+    </form>
+    <section class="panel table-panel">
+        {% if samples %}<div class="table-wrap"><table><thead><tr><th>Código</th><th>Tipo</th><th>Origem</th><th>Solicitante</th><th>Recebimento</th><th>Status</th></tr></thead><tbody>
+        {% for sample in samples %}<tr><td><a class="code-link" href="{{ sample.get_absolute_url }}">{{ sample.code }}</a></td><td>{{ sample.get_sample_type_display }}</td><td>{{ sample.origin }}</td><td>{{ sample.requester }}</td><td>{{ sample.received_at|date:"d/m/Y" }}</td><td><span class="status {{ sample.status|lower }}">{{ sample.get_status_display }}</span></td></tr>{% endfor %}
+        </tbody></table></div>{% else %}<div class="empty"><strong>Nenhuma amostra encontrada</strong><p>Tente alterar os filtros ou cadastre uma nova amostra.</p></div>{% endif %}
+    </section>
+</section>
+{% endblock %}
