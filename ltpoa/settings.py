@@ -2,9 +2,15 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Variáveis do ambiente do sistema sempre têm prioridade. O arquivo local é
+# utilizado apenas no desenvolvimento para conectar a instância Neon vinculada.
+load_dotenv(BASE_DIR / ".env", override=False)
+load_dotenv(BASE_DIR / ".env.local", override=False)
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me-before-production")
 DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
